@@ -25,7 +25,6 @@ public class ServersListener implements Runnable
             while(true)
             {
                 CommandFromClient cfc = (CommandFromClient) is.readObject();
-                System.out.println(""+cfc.getCommand() + turn + !(gameData.isWinner()=='R') + !(gameData.isWinner() == 'Y') + !(gameData.tie()));
                 if (cfc.getCommand() == CommandFromClient.CLOSE) {
                     sendCommand(new CommandFromServer(CommandFromServer.CLOSE, null));
                 }
@@ -58,13 +57,6 @@ public class ServersListener implements Runnable
                     changeTurn();
                     checkGameOver();
                 }
-                else{
-                    System.out.println(cfc.getCommand()==CommandFromClient.MOVE);
-                    System.out.println(turn==player);
-                    System.out.println(gameData.isWinner() == ' ');
-                    System.out.println(!gameData.tie());
-                    System.out.println();
-                }
             }
         }
         catch(Exception e)
@@ -93,7 +85,6 @@ public class ServersListener implements Runnable
             c = CommandFromServer.RED_WINS;
         else if(gameData.isWinner() == 'Y')
             c = CommandFromServer.YELLOW_WINS;
-        // if the game ended, informs both clients of the game's end state
         if(c!=-1)
             sendCommand(new CommandFromServer(c, null));
     }
@@ -104,7 +95,6 @@ public class ServersListener implements Runnable
 
     public void sendCommand(CommandFromServer cfs)
     {
-        // Sends command to both players
         for (ObjectOutputStream o : outs) {
             try {
                 o.writeObject(cfs);

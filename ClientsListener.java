@@ -29,36 +29,19 @@ public class ClientsListener implements Runnable {
                 if (cfs.getCommand() == CommandFromServer.CLOSE) {
                     frame.closing();
                 }
-//                if (cfs.getCommand() == CommandFromServer.CNFRST) {
-//                    frame.clear();
-//                    frame.setTurn('R');
-//                    //frame.clear();
-//                    frame.repaint();
-//                }
                 if (cfs.getCommand() == CommandFromServer.RESET) {
-//                    if (!frame.gSR()) {
                         frame.conf("Your op would like to rematch Press OK to accept a rematch, else exit out the pop up", "Rematch Request");
-//                    }
                 }
-
-
-
-                    // processes the received command
                 if (cfs.getCommand() == CommandFromServer.RED_TURN) {
                     frame.setTurn('R');
                 } else if (cfs.getCommand() == CommandFromServer.YELLOW_TURN) {
                     frame.setTurn('Y');
                 } else if (cfs.getCommand() == cfs.MOVE) {
                     String data = cfs.getData();
-                    // pulls data for the move from the data field
                     int column = data.charAt(0) - '0';
                     int row = data.charAt(1) - '0';
-
-
-                    // changes the board and redraw the screen
                     frame.makeMove(column, row, data.charAt(2));
                 }
-                // handles the various end game states
                 else if (cfs.getCommand() == CommandFromServer.TIE) {
                     frame.setText("Tie game.");
                     frame.setTurn('A');

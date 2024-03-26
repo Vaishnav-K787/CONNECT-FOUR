@@ -26,20 +26,12 @@ public class CCC4Frame extends JFrame implements MouseListener, WindowListener {
     private long time  = -1;
 
     public CCC4Frame(GameData gameData, ObjectOutputStream os, char player) {
-        // Setups Frame
         super("Connect Four");
         this.gameData = gameData;
         this.os = os;
         this.player = player;
         addMouseListener(this);
-        //addWindowListener(e-> );
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//        if (player == 'R') {
-//            text = "Waiting for Yellow to Connect";
-//            if(out == true) {
-//                //closing();
-//            }
-//        }
 
         setSize(530, 590);
         setResizable(false);
@@ -47,8 +39,6 @@ public class CCC4Frame extends JFrame implements MouseListener, WindowListener {
         setVisible(true);
 
 
-        //p = new CCC4Panel(1000, 1000);
-        // p.setBackground(Color.YELLOW);
         setResizable(false);
         setAlwaysOnTop(true);
         setVisible(true);
@@ -120,7 +110,6 @@ public class CCC4Frame extends JFrame implements MouseListener, WindowListener {
             if (turn == player)
                 setText("Your Turn");
             else if (turn == 'A') {
-                // Game ended, update text based on win/tie
                 if (gameData.isWinner() == 'R')
                     setText("Red Win");
                 else if (gameData.isWinner() == 'Y')
@@ -128,7 +117,6 @@ public class CCC4Frame extends JFrame implements MouseListener, WindowListener {
                 else if (gameData.tie())
                     setText("Tie Game");
             } else {
-                // Game ongoing, update text based on current turn
                 if (turn == 'R')
                     setText("Red Turn");
                 else
@@ -153,24 +141,10 @@ public class CCC4Frame extends JFrame implements MouseListener, WindowListener {
     @Override
     public void mouseClicked(MouseEvent e)
     {
-//        System.out.println("MOUSECLICKED");
         if(SwingUtilities.isRightMouseButton(e))
         {
             if(gameData.isWinner() == 'R' || gameData.isWinner() == 'Y' || gameData.tie())
             {
-//                if(sCR == false)
-//                {
-//                    try
-//                    {
-//                        sCR = true;
-//                        os.writeObject(new CommandFromClient(CommandFromClient.CNF,""));
-//                        reset();
-//                    }
-//                    catch(IOException o)
-//                    {
-//                        o.printStackTrace();
-//                    }
-//                }
                 try {
                     os.writeObject(new CommandFromClient(CommandFromClient.RESTART, ""));
                 } catch (Exception er) {
@@ -186,20 +160,6 @@ public class CCC4Frame extends JFrame implements MouseListener, WindowListener {
     public void mousePressed(MouseEvent e)
     {
         if (gameData.isWinner() == 'R' || gameData.isWinner() == 'Y' || gameData.tie()) {
-//            if (sCR) {
-//                try {
-//                    os.writeObject(new CommandFromClient(CommandFromClient.CNF, ""));
-//                } catch (Exception ea) {
-//                    ea.printStackTrace();
-//                }
-//            }
-//            sRR = true;
-//            try {
-//                os.writeObject(new CommandFromClient(CommandFromClient.RESTART, ""));
-//            } catch (Exception eb) {
-//                eb.printStackTrace();
-//            }
-//            mouseClicked(e);
             return;
         }
         if(e.getButton() != MouseEvent.BUTTON1){
@@ -219,13 +179,11 @@ public class CCC4Frame extends JFrame implements MouseListener, WindowListener {
             } catch (Exception e2) {
                 e2.printStackTrace();
             }
-//            makeMove(I, J, player);
         }
     }
     public void clear()
     {
         gameData.reset();
-        //reset();
         time = -1;
         sRR = false;
         sCR = false;
@@ -262,7 +220,6 @@ public class CCC4Frame extends JFrame implements MouseListener, WindowListener {
 
     }
     public void conf(String m, String title) {
-//        System.out.println("RAN");
         sCR = true;
         if(gameData.WHICH_CALL){
             gameData.WHICH_CALL = false;
@@ -300,7 +257,6 @@ public class CCC4Frame extends JFrame implements MouseListener, WindowListener {
     @Override
     public void windowClosing(WindowEvent e) {
         try {
-//            System.out.println("here");
             os.writeObject(new CommandFromClient(CommandFromClient.CLOSE, "" + player));
         } catch (IOException ex) {
             throw new RuntimeException(ex);
@@ -310,25 +266,6 @@ public class CCC4Frame extends JFrame implements MouseListener, WindowListener {
 
     public void closing() throws InterruptedException
     {
-//        System.out.println("here");
-        /*time = System.currentTimeMillis();
-        long t2 = -1;
-        while (true)
-        {
-            long tp = System.currentTimeMillis() - time;
-            long sp = tp/1000;
-            if(sp>t2)
-            {
-                text = "Client disconnected - closing in:"+(5-sp);
-                t2 = sp;
-                repaint();
-            }
-            if(sp>=6)
-            {
-                break;
-            }
-        }
-        System.exit(0);*/
         for (int i = 5 ; i>=0; i--)
         {
             try {

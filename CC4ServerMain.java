@@ -14,7 +14,6 @@ public class CC4ServerMain {
             ObjectInputStream ris = new ObjectInputStream(rCon.getInputStream());
 
             ros.writeObject(new CommandFromServer(CommandFromServer.CONNECTED_AS_RED,null));
-            System.out.println("Red has connected");
 
             ServersListener sl = new ServersListener(ris,ros,'R');
             Thread t = new Thread(sl);
@@ -25,7 +24,6 @@ public class CC4ServerMain {
             ObjectInputStream yis = new ObjectInputStream(yCon.getInputStream());
 
             yos.writeObject(new CommandFromServer(CommandFromServer.CONNECTED_AS_YELLOW,null));
-            System.out.println("Yellow has connected");
 
             sl = new ServersListener(yis,yos,'Y');
             t = new Thread(sl);

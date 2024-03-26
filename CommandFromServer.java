@@ -3,12 +3,9 @@ import java.io.Serializable;
 
 public class CommandFromServer implements Serializable
 {
-    // The command being sent to the client
     private int command;
-    // Text data for the command
     private String data ="";
 
-    // Command list
     public static final int CONNECTED_AS_RED=0;
     public static final int CONNECTED_AS_YELLOW=1;
     public static final int RED_TURN=2;
